@@ -27,7 +27,35 @@
 
 3. 由于非线性PA算法每次预测时如果产生损失都要保存支持向量，随着支持向量的数量的增加，其模型会变的越来越复杂和庞大，为了避免支持向量无限的增加下去，我采用了固定缓冲器的核在线学习方法，如果支持向量的数量超过阈值则会随机选择一个支持向量剔除出支持向量集合。
 
+##3. 实验
+实验的数据集来自为[household_power_consumption_days](https://archive.ics.uci.edu/ml/datasets/individual+household+electric+power+consumption)。该数据集是一个多变量时间序列数据集，用于描述单个家庭四年的用电量。该数据是在2006年12月至2010年11月之间收集的，并且每分钟收集家庭内的能耗观察结果。
 
+它是一个多变量系列，由七个变量组成（除日期和时间外）; 他们是：
+
+（1） global_active_power：家庭消耗的总有功功率（千瓦）。
+
+（2）global_reactive_power：家庭消耗的总无功功率（千瓦）。
+
+（3）voltage：平均电压（伏特）。
+
+（4）global_intensity：平均电流强度（安培）。
+
+（5）sub_metering_1：厨房的有功电能（瓦特小时的有功电能）。
+
+（6）sub_metering_2：用于洗衣的有功能量（瓦特小时的有功电能）。
+
+（7）sub_metering_3：气候控制系统的有功电能（瓦特小时的有功电能）
+
+实验结果如下所示：
+![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/下载.png)
+
+![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/下载(1).png)
+
+![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/下载(2).png)
+
+![PA,SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/下载(3).png)
+
+![PA,SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/下载(4).png)
 
 HetOTL算法，即异构算法的特点：
 （1）数据的目标域由两部分组成，一部分是和源域一样的特征，一部分是其特有的特征，相应的，我们的模型也分成两个部分，一个模型对应于源域的特征，一个模型对应于目标域新出现的特征。
