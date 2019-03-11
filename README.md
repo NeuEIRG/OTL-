@@ -30,7 +30,7 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 
 3. 由于非线性PA算法每次预测时如果产生损失都要保存支持向量，随着支持向量的数量的增加，其模型会变的越来越复杂和庞大，为了避免支持向量无限的增加下去，我采用了固定缓冲器的核在线学习方法，如果支持向量的数量超过阈值则会随机选择一个支持向量剔除出支持向量集合。
 
-![s固定缓冲器](https://github.com/neuOTL/OTL-/blob/master/IO%2504QJ%5D%25EB(%25%40DIE%241(M3Y.png) 
+![s固定缓冲器](https://github.com/neuOTL/OTL-/blob/master/IO%2504QJ%5D%25EB(%25%40DIE%241(M3Y.png)
 
 ##3. 实验
 实验的数据集来自为[household_power_consumption_days](https://archive.ics.uci.edu/ml/datasets/individual+household+electric+power+consumption)。该数据集是一个多变量时间序列数据集，用于描述单个家庭四年的用电量。该数据是在2006年12月至2010年11月之间收集的，并且每分钟收集家庭内的能耗观察结果。
