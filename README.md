@@ -3,7 +3,9 @@
 
 # 在线迁移学习实现
 ## 1.在线迁移学习概述
-在线迁移学习（OTL），是一种在在线环境下将离线状态下学习到的模型利用迁移学习的技术与在线模型相融合的一种新式的机器学习方法。OTL可以解决在线环境下的数据漂移问题（简单的说就是数据分布随时间发生变化），这是单纯利用迁移学习所无法解决的。同时OTL也比直接使用在线学习效果要更高，因为OTL利用了离线模型学习到的知识。所以，OTL是一种在特定情境下应用的兼具在线学习与迁移学习优点的方法。首次提出在线迁移学习算法的是Peilin Zhao和Steven Hoi，Peilin Zhao在阿里巴巴做研究，Steven Hoi是新加坡管理大学(SMU)的副教授。以下是论文连接：
+在线迁移学习（OTL），是一种在在线环境下将离线状态下学习到的模型利用迁移学习的技术与在线模型相融合的一种新式的机器学习方法。其有两个基本假设：（i）目标域的训练数据是以序列模式到来的 (ii) 已经有一些模型在源域上训练完成.
+
+OTL可以解决在线环境下的数据漂移问题（简单的说就是数据分布随时间发生变化），这是单纯利用迁移学习所无法解决的。同时OTL也比直接使用在线学习效果要更高，因为OTL利用了离线模型学习到的知识。所以，OTL是一种在特定情境下应用的兼具在线学习与迁移学习优点的方法。首次提出在线迁移学习算法的是Peilin Zhao和Steven Hoi，Peilin Zhao在阿里巴巴做研究，Steven Hoi是新加坡管理大学(SMU)的副教授。以下是论文连接：
 
 [《Online Transfer Learning》](https://ac.els-cdn.com/S0004370214000800/1-s2.0-S0004370214000800-main.pdf?_tid=66004ea4-e571-49a5-9ca5-d9f34e33359d&acdnat=1552293438_54e27b877ccfe21927468e2d7f931966)
 
@@ -18,6 +20,7 @@
 
 ![同质域OTL算法](https://github.com/neuOTL/OTL-/blob/master/Hom_OTL1.png)
 
+该算法的核心思想来自于集成学习（ensemble learning）,OTL的预测结果由一个在线学习模型（比如PA算法）得到的结果，和一个离线学习模型（比如svm）的预测结果，加权平均得到的。OTL算法最核心的地方就是该如何根据线上预测时到来的实例序列来跟新这两个模型的组合权重。为此作者精心设计了一套有效的更新方法，解决了“协变量转移”的挑战，并给出算法收敛性的数学证明。
 
 论文中提出的算法是用来解决线性分类问题的，而我在实验中实现的是非线性回归问题的OTL算法，其主要变化是：
 
@@ -48,19 +51,19 @@
 
 实验结果如下所示：
 ![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/下载.png)
-各时刻训练结果比较（归一化后）
+                 图1： 各时刻训练结果比较（归一化后）
 
 ![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(1).png)
-SVR和OTL算法的MSE变化趋势
+                 图2：SVR和OTL算法的MSE变化趋势
 
 ![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(2).png)
-SVR和OTL算法的MAE变化趋势
+                 图3：SVR和OTL算法的MAE变化趋势
 
 ![PA,SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(3).png)
-PA,SVR和OTL算法的MSE变化趋势
+                 图4：PA,SVR和OTL算法的MSE变化趋势
 
 ![PA,SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(4).png)
-PA,SVR和OTL算法的MAE变化趋势
+                 图5：PA,SVR和OTL算法的MAE变化趋势
 
 HetOTL算法，即异构算法的特点：
 （1）数据的目标域由两部分组成，一部分是和源域一样的特征，一部分是其特有的特征，相应的，我们的模型也分成两个部分，一个模型对应于源域的特征，一个模型对应于目标域新出现的特征。
