@@ -49,7 +49,7 @@
 实验结果如下所示：
 ![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/下载.png)
 
-![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/下载（1）.png)
+![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(1).png)
 
 ![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/下载（2）.png)
 
