@@ -49,31 +49,48 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 
 （7）sub_metering_3：气候控制系统的有功电能（瓦特小时的有功电能）
 
-实验结果采用回归问题常用的评价指标：平均平方误差（MSE）和平均绝对值误差（MAE）来衡量预测结果，预测结果如下所示
-实验结果如下所示：
+实验结果采用回归问题常用的评价指标：平均平方误差（MSE）和平均绝对值误差（MAE）来衡量预测结果，预测结果如下所示:其中图1是PA预测值，svm预测值和OTL预测值与实际值的曲线变化趋势；图2，3是svm和OTL在每一轮训练时累计MSE和MAE误差曲线；图4，5是PA，svm和OTL在每一轮训练时累计MSE和MAE误差曲线。
+
 ![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/下载.png)
- &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;图1： 各时刻训练结果比较（归一化后）
+ &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;图1： 各时刻训练结果比较（归一化后）
 
 ![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(1).png)
-  &emsp;&emsp;&emsp;  &emsp;&emsp;&emsp;              图2：SVR和OTL算法的MSE变化趋势
+  &emsp;&emsp;&emsp;  &emsp;&emsp;&emsp;      &emsp;&emsp;&emsp;        图2：SVR和OTL算法的MSE变化趋势
 
 ![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(2).png)
-   &emsp;&emsp;&emsp;   &emsp;&emsp;&emsp;           图3：SVR和OTL算法的MAE变化趋势
+   &emsp;&emsp;&emsp;   &emsp;&emsp;&emsp;     &emsp;&emsp;&emsp;      图3：SVR和OTL算法的MAE变化趋势
 
 ![PA,SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(3).png)
-   &emsp;&emsp;&emsp;    &emsp;&emsp;&emsp;          图4：PA,SVR和OTL算法的MSE变化趋势
+   &emsp;&emsp;&emsp;    &emsp;&emsp;&emsp;    &emsp;&emsp;&emsp;      图4：PA,SVR和OTL算法的MSE变化趋势
 
 ![PA,SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(4).png)
-     &emsp;&emsp;&emsp;        &emsp;&emsp;&emsp;     图5：PA,SVR和OTL算法的MAE变化趋势
+     &emsp;&emsp;&emsp;        &emsp;&emsp;&emsp;   &emsp;&emsp;&emsp;  图5：PA,SVR和OTL算法的MAE变化趋势
+     
+## 4.实验结论
+可以看出，OTL算法在200轮之后的误差已经低于本地训练的svr模型，说明OTL算法是优于PA算法和svr算法的简单组合的，这体现了集成学习的威力，即若干个弱分类器组合在一起的表现要更好。PA算法由于初始是从零开始学习，所以需要一段时间才能收敛，如果数据集发生了很严重的数据漂移的话，PA算法的表现应该会强于离线学习的svr。无论如何，OTL算法的预测误差上界是在线和离线模型中误差最小的那个。
 
-HetOTL算法，即异构算法的特点：
-（1）数据的目标域由两部分组成，一部分是和源域一样的特征，一部分是其特有的特征，相应的，我们的模型也分成两个部分，一个模型对应于源域的特征，一个模型对应于目标域新出现的特征。
-（2）源域分类器初始化为离线模型，目标域分类器初始化为零
-（3）源域分类器和目标分类器要同时进行更新，所以说源域的分类器不能随意的挑选了
-（4）在HetOTL算法中，如果要讲其从分类问题扩展到回归问题的话需要把Proposistion2 的推导换成回归问题的损失函数再推导一遍，两个模型的更新的形式应该和分类问题不同
 
-CDOL算法,即发生数据飘移的算法的特点：
-（1）其实和OTL算法相比只是增加了一个窗口更新策略,，该算法的思路是讲训练过程换分为各个时期即窗口，每一个窗口训练一个在线的模型，在这个窗口结束之后，该算法会从目标域和源域这两个模型中挑选表现最好的模型赋给源域模型，同时将目标与的模型置为零，在下一个周期（窗口）中重新训练一个新的目标域模型。
+## 5.异构域与数据漂移OTL
+作者在论文的第二部分分别针对异构域与数据漂移的情况提出了3个算法，其中HetOTL是针对异构域情况的，CDOL和OWA是针对数据漂移情况的。
 
-OWA算法，即可动态更新窗口大小的算法的特点
-每次到到达窗口更新时机的时候，计算错误率，如果源域分类器的错误率大于目标域错误率，则跟换新的窗口周期i，将窗口大小置为初始值P，如果反之，则不更新窗口周期i，继续增大窗口的大小（应该是通过增大窗口大小使在线模型学习到更多的信息，使其准确率增加）
+### 5.1 HetOTL算法，即异构算法的特点：
+
+（1） 数据的目标域由两部分组成，一部分是和源域一样的特征，一部分是其特有的特征，相应的，我们的模型也分成两个部分，一个模型对应于源域的特征，一个模型对应于目标域新出现的特征。
+
+（2） 源域分类器初始化为离线模型，目标域分类器初始化为零
+
+（3） 源域分类器和目标分类器要同时进行更新，所以说源域的分类器不能随意的挑选了
+
+（4） 在HetOTL算法中，如果要讲其从分类问题扩展到回归问题的话需要把Proposistion2 的推导换成回归问题的损失函数再推导一遍，两个模型的更新的形式应该和分类问题不同
+
+![hemtol](https://github.com/neuOTL/OTL-/blob/master/OZN(7OV52%5B%24%5BU2UKJ%7BANXYO.png)
+
+### 5.2 CDOL算法,即进一步针对数据飘移提出的OTL算法：
+CDOL算法的基本观点是：如果数据漂移十分严重，说明源域的模型已经不再适合继续预测了，所以我们需要动态的改变源域模型。CDOL算法其实是Hom-OTL算法的改进，与之相比只是增加了一个窗口更新策略。该算法的思路是讲训练过程换分为各个时期即窗口，每一个窗口训练一个在线的模型，在这个窗口结束之后，该算法会从目标域和源域这两个模型中挑选表现最好的模型赋给源域模型，同时将目标与的模型置为零，在下一个周期（窗口）中重新训练一个新的目标域模型。
+。
+![CDOL](https://github.com/neuOTL/OTL-/blob/master/Q1A%7BZJMD%40%2466RKFB7%40~4EIX.png)
+
+### 5.3 OWA算法，即增加了可动态更新窗口大小的算法的特点
+OWA算法是CDOL算法的改进。其主要思想是：每次到到达窗口更新时机的时候，计算错误率，如果源域分类器的错误率大于目标域错误率，则跟换新的窗口周期i，将窗口大小置为初始值P，如果反之，则不更新窗口周期i，继续增大窗口的大小（通过增大窗口大小使在线模型学习到更多的信息，使其准确率增加）
+
+![OWA](https://github.com/neuOTL/OTL-/blob/master/4QV%24O8(QG_9DJ1_HS0_(%7DLS.png)
