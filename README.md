@@ -52,19 +52,19 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 实验结果采用回归问题常用的评价指标：平均平方误差（MSE）和平均绝对值误差（MAE）来衡量预测结果，预测结果如下所示
 实验结果如下所示：
 ![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/下载.png)
-&emsp&emsp&emsp图1： 各时刻训练结果比较（归一化后）
+ &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;图1： 各时刻训练结果比较（归一化后）
 
 ![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(1).png)
-  &emsp;&emsp;&emsp;               图2：SVR和OTL算法的MSE变化趋势
+  &emsp;&emsp;&emsp;  &emsp;&emsp;&emsp;              图2：SVR和OTL算法的MSE变化趋势
 
 ![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(2).png)
-   &emsp;&emsp;&emsp;              图3：SVR和OTL算法的MAE变化趋势
+   &emsp;&emsp;&emsp;   &emsp;&emsp;&emsp;           图3：SVR和OTL算法的MAE变化趋势
 
 ![PA,SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(3).png)
-   &emsp;&emsp;&emsp;             图4：PA,SVR和OTL算法的MSE变化趋势
+   &emsp;&emsp;&emsp;    &emsp;&emsp;&emsp;          图4：PA,SVR和OTL算法的MSE变化趋势
 
 ![PA,SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(4).png)
-     &emsp;&emsp;&emsp;            图5：PA,SVR和OTL算法的MAE变化趋势
+     &emsp;&emsp;&emsp;        &emsp;&emsp;&emsp;     图5：PA,SVR和OTL算法的MAE变化趋势
 
 HetOTL算法，即异构算法的特点：
 （1）数据的目标域由两部分组成，一部分是和源域一样的特征，一部分是其特有的特征，相应的，我们的模型也分成两个部分，一个模型对应于源域的特征，一个模型对应于目标域新出现的特征。
