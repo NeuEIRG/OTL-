@@ -15,7 +15,7 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 论文中提出了两种同质域OTL算法，分别是HomOTL-I和HomOTL-II。这两种算法的核心思想是相同的，只不过看问题的角度不一样，HomOTL-I是从损失的角度来更新模型，而HomOTL-II是从错误率来更新模型。该算法的基本表示如下所示：
 
 
-![同质域OTL算法](https://github.com/neuOTL/OTL-/blob/master/Hom_OTL1.png)
+![同质域OTL算法](https://github.com/neuOTL/OTL-/blob/master/pictures/Hom_OTL1.png)
 
 该算法的核心思想来自于集成学习（ensemble learning）,OTL的预测结果由一个在线学习模型（比如PA算法）得到的结果，和一个离线学习模型（比如svm）的预测结果，加权平均得到的。OTL算法最核心的地方就是该如何根据线上预测时到来的实例序列来跟新这两个模型的组合权重。为此作者精心设计了一套有效的更新方法，解决了“协变量转移”的挑战，并给出算法收敛性的数学证明。
 
@@ -23,7 +23,7 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 
 1. 将原始算法的损失函数从hinge损失变为 ε-不敏感损失。并且删除了源算法中的归一化部分（我统一在OTL使用之前归一化）
 
-![svr损失函数](https://github.com/neuOTL/OTL-/blob/master/9%7DJU15BCR58Z%24T%24X3_H~%5DS6.png)
+![svr损失函数](https://github.com/neuOTL/OTL-/blob/master/pictures/SVR%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png)
 
 2. 对于在线学习算法PA,我将线性多项式扩展为了径向基核多项式，使其具有非线性映射的能力。
 
@@ -51,19 +51,19 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 
 实验结果采用回归问题常用的评价指标：平均平方误差（MSE）和平均绝对值误差（MAE）来衡量预测结果，预测结果如下所示:其中图1是PA预测值，svm预测值和OTL预测值与实际值的曲线变化趋势；图2，3是svm和OTL在每一轮训练时累计MSE和MAE误差曲线；图4，5是PA，svm和OTL在每一轮训练时累计MSE和MAE误差曲线。
 
-![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/下载.png)
+![各时刻训练结果比较（归一化后）](https://github.com/neuOTL/OTL-/blob/master/pictures/akk.png)
  &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;图1： 各时刻训练结果比较（归一化后）
 
-![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(1).png)
+![SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/pictures/mse2.png)
   &emsp;&emsp;&emsp;  &emsp;&emsp;&emsp;      &emsp;&emsp;&emsp;        图2：SVR和OTL算法的MSE变化趋势
 
-![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(2).png)
+![SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/pictures/mae2.png)
    &emsp;&emsp;&emsp;   &emsp;&emsp;&emsp;     &emsp;&emsp;&emsp;      图3：SVR和OTL算法的MAE变化趋势
 
-![PA,SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(3).png)
+![PA,SVR和OTL算法的MSE变化趋势](https://github.com/neuOTL/OTL-/blob/master/pictures/mse3.png)
    &emsp;&emsp;&emsp;    &emsp;&emsp;&emsp;    &emsp;&emsp;&emsp;      图4：PA,SVR和OTL算法的MSE变化趋势
 
-![PA,SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/%E4%B8%8B%E8%BD%BD%20(4).png)
+![PA,SVR和OTL算法的MAE变化趋势](https://github.com/neuOTL/OTL-/blob/master/pictures/mse4.png)
      &emsp;&emsp;&emsp;        &emsp;&emsp;&emsp;   &emsp;&emsp;&emsp;  图5：PA,SVR和OTL算法的MAE变化趋势
      
 ## 4.实验结论
@@ -83,14 +83,14 @@ OTL可以解决在线环境下的数据漂移问题（简单的说就是数据�
 
 （4） 在HetOTL算法中，如果要讲其从分类问题扩展到回归问题的话需要把Proposistion2 的推导换成回归问题的损失函数再推导一遍，两个模型的更新的形式应该和分类问题不同。
 
-![好好hemtol](https://github.com/neuOTL/OTL-/blob/master/OZN//(7OV52%5B%24%5BU2UKJ%7BANXYO.png)
+![好好hemtol](https://github.com/neuOTL/OTL-/blob/master/pictures/HetOTL%E7%AE%97%E6%B3%95.png)
 
 ### 5.2 CDOL算法,即进一步针对数据飘移提出的OTL算法：
 CDOL算法的基本观点是：如果数据漂移十分严重，说明源域的模型已经不再适合继续预测了，所以我们需要动态的改变源域模型。CDOL算法其实是Hom-OTL算法的改进，与之相比只是增加了一个窗口更新策略。该算法的思路是讲训练过程换分为各个时期即窗口，每一个窗口训练一个在线的模型，在这个窗口结束之后，该算法会从目标域和源域这两个模型中挑选表现最好的模型赋给源域模型，同时将目标与的模型置为零，在下一个周期（窗口）中重新训练一个新的目标域模型。
 。
-![经济CDOL](https://github.com/neuOTL/OTL-/blob/master/Q1A%7BZJMD%40%2466RKFB7%40~4EIX.png)
+![经济CDOL](https://github.com/neuOTL/OTL-/blob/master/pictures/CDOL%E7%AE%97%E6%B3%95.png)
 
 ### 5.3 OWA算法，即增加了可动态更新窗口大小的算法的特点
 OWA算法是CDOL算法的改进。其主要思想是：每次到到达窗口更新时机的时候，计算错误率，如果源域分类器的错误率大于目标域错误率，则跟换新的窗口周期i，将窗口大小置为初始值P，如果反之，则不更新窗口周期i，继续增大窗口的大小（通过增大窗口大小使在线模型学习到更多的信息，使其准确率增加）。
 
-![看看OWA](https://github.com/neuOTL/OTL-/blob/master/4QV%24O8//(QG_9DJ1_HS0_(%7DLS.png)
+![看看OWA](https://github.com/neuOTL/OTL-/blob/master/pictures/OWA%E7%AE%97%E6%B3%95.png)
